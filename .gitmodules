@@ -1,0 +1,3 @@
+[submodule "custom/4coder_fleury"]
+	path = custom/4coder_fleury
+	url = https://github.com/rakivo/4coder_rakivo
