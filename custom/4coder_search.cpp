@@ -572,7 +572,7 @@ get_word_complete_from_user_drop_down(Application_Links *app){
         for (;keep_looping_menu;){
             User_Input in = get_next_input(app, EventPropertyGroup_Any,
                                            EventProperty_Escape);
-            if (in.abort){
+            if (in.abort || match_key_code(&in.event, KeyCode_G) && has_modifier(&in.event.key.modifiers, KeyCode_Control)){
                 break;
             }
             

@@ -930,7 +930,7 @@ isearch(Application_Links *app, Scan_Direction start_scan, i64 first_pos,
         isearch__update_highlight(app, view, Ii64_size(pos, match_size));
         
         in = get_next_input(app, EventPropertyGroup_Any, EventProperty_Escape);
-        if (in.abort){
+        if (in.abort || match_key_code(&in.event, KeyCode_G) && has_modifier(&in.event.key.modifiers, KeyCode_Control)){
             break;
         }
         

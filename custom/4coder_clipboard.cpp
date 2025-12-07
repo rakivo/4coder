@@ -87,7 +87,7 @@ CUSTOM_DOC("Allows the user to copy multiple strings from other applications bef
         
         for (;;){
             User_Input in = get_next_input(app, EventPropertyGroup_Any, EventProperty_Escape);
-            if (in.abort){
+            if (in.abort || match_key_code(&in.event, KeyCode_G) && has_modifier(&in.event.key.modifiers, KeyCode_Control)){
                 break;
             }
             if (in.event.kind == InputEventKind_KeyStroke && in.event.key.code == KeyCode_Escape){
@@ -334,7 +334,7 @@ multi_paste_interactive_up_down(Application_Links *app, i32 paste_count, i32 cli
     User_Input in = {};
     for (;;){
         in = get_next_input(app, EventProperty_AnyKey, EventProperty_Escape);
-        if (in.abort) break;
+        if (in.abort || match_key_code(&in.event, KeyCode_G) && has_modifier(&in.event.key.modifiers, KeyCode_Control)) break;
         
         b32 did_modify = false;
         if (match_key_code(&in, KeyCode_Up)){

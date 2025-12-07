@@ -69,13 +69,14 @@ up this command and we get a chance to modify the bar again. */
   }
   
   User_Input in = get_next_input(app, EventPropertyGroup_Any, EventProperty_Escape);
-  if (in.abort){
+  if (in.abort ||	match_key_code(&in.event, KeyCode_G) && has_modifier(&in.event.key.modifiers, KeyCode_Control)
+){
    break;
   }
   
   if (match_key_code(&in.event, KeyCode_Up)){
    counter += 1;
-  }
+  }	
   else if (match_key_code(&in.event, KeyCode_Down)){
    counter -= 1;
   }
@@ -116,7 +117,7 @@ isn't happening, so command bindings don't trigger unless you trigger them yours
                              is_dead_key?" dead-key":"");
   }
   User_Input in = get_next_input(app, EventPropertyGroup_Any, EventProperty_Escape);
-  if (in.abort){
+  if (in.abort || match_key_code(&in.event, KeyCode_G) && has_modifier(&in.event.key.modifiers, KeyCode_Control)) {
    break;
   }
   if (in.event.kind == InputEventKind_KeyStroke){
@@ -155,7 +156,7 @@ isn't happening, so command bindings don't trigger unless you trigger them yours
  
  for (;;){
   User_Input in = get_next_input(app, EventPropertyGroup_Any, EventProperty_Escape);
-  if (in.abort){
+  if (in.abort || match_key_code(&in.event, KeyCode_G) && has_modifier(&in.event.key.modifiers, KeyCode_Control)){
    break;
   }
   

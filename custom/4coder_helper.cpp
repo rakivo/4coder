@@ -1516,7 +1516,7 @@ query_user_general(Application_Links *app, Query_Bar *bar, b32 force_number, Str
     for (;;){
         User_Input in = get_next_input(app, EventPropertyGroup_Any,
                                        EventProperty_Escape|EventProperty_MouseButton);
-        if (in.abort){
+        if (in.abort || match_key_code(&in.event, KeyCode_G) && has_modifier(&in.event.key.modifiers, KeyCode_Control)){
             success = false;
             break;
         }

@@ -518,7 +518,7 @@ run_lister(Application_Links *app, Lister *lister){
     
     for (;;){
         User_Input in = get_next_input(app, EventPropertyGroup_Any, EventProperty_Escape);
-        if (in.abort){
+        if (in.abort || match_key_code(&in.event, KeyCode_G) && has_modifier(&in.event.key.modifiers, KeyCode_Control)){
             block_zero_struct(&lister->out);
             lister->out.canceled = true;
             break;
@@ -552,7 +552,7 @@ run_lister(Application_Links *app, Lister *lister){
                     case KeyCode_Backspace:
                     {
                         if (lister->handlers.backspace != 0){
-                            lister->handlers.backspace(app);
+													  lister->handlers.backspace(app);
                         }
                         else if (lister->handlers.key_stroke != 0){
                             result = lister->handlers.key_stroke(app);
@@ -579,6 +579,32 @@ run_lister(Application_Links *app, Lister *lister){
                     {
                         if (lister->handlers.navigate != 0){
                             lister->handlers.navigate(app, view, lister, 1);
+                        }
+                        else if (lister->handlers.key_stroke != 0){
+                            result = lister->handlers.key_stroke(app);
+                        }
+                        else{
+                            handled = false;
+                        }
+                    }break;
+
+                    case KeyCode_N:
+                    {
+                        if (lister->handlers.navigate != 0 && has_modifier(&in.event.key.modifiers, KeyCode_Control)){
+                            lister->handlers.navigate(app, view, lister, 1);
+                        }
+                        else if (lister->handlers.key_stroke != 0){
+                            result = lister->handlers.key_stroke(app);
+                        }
+                        else{
+                            handled = false;
+                        }
+                    }break;
+                    
+                    case KeyCode_P:
+                    {
+                        if (lister->handlers.navigate != 0 && has_modifier(&in.event.key.modifiers, KeyCode_Control)){
+                            lister->handlers.navigate(app, view, lister, -1);
                         }
                         else if (lister->handlers.key_stroke != 0){
                             result = lister->handlers.key_stroke(app);
@@ -930,6 +956,7 @@ lister__key_stroke__choice_list(Application_Links *app){
     View_ID view = get_active_view(app, Access_Always);
     Lister *lister = view_get_lister(app, view);
     if (lister != 0){
+			printf("WROTE SOMETHING\n");
         User_Input in = get_current_input(app);
         if (in.event.kind == InputEventKind_KeyStroke){
             void *user_data = 0;

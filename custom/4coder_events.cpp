@@ -202,7 +202,7 @@ get_event_properties(Input_Event *event){
         
         case InputEventKind_KeyStroke:
         {
-            if (event->key.code == KeyCode_Escape){
+            if (event->key.code == KeyCode_Escape || match_key_code(event, KeyCode_G) && has_modifier(&event->key.modifiers, KeyCode_Control)){
                 flags |= EventProperty_Escape;
             }
             flags |= EventProperty_AnyKey;

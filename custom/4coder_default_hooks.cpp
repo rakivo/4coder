@@ -746,6 +746,7 @@ BUFFER_HOOK_SIG(default_begin_buffer){
                 if (string_match(ext, string_u8_litexpr("cpp")) ||
                     string_match(ext, string_u8_litexpr("h")) ||
                     string_match(ext, string_u8_litexpr("c")) ||
+                    string_match(ext, string_u8_litexpr("rs")) ||
                     string_match(ext, string_u8_litexpr("hpp")) ||
                     string_match(ext, string_u8_litexpr("cc"))){
                     treat_as_code = true;
